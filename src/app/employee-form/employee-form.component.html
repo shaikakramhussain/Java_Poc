@@ -1,0 +1,87 @@
+<div class=" conatinerStyle ">
+    <h3 class="border-bottom p-3">Enter Employee Information</h3>
+    <form [formGroup]="empForm">
+        <div class="form-group">
+            <label> ID</label>
+            <input type="text" formControlName="id" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.id.errors }" />
+            <div *ngIf="submitted && f.id.errors" class="invalid-feedback">
+                <div *ngIf="f.id.errors.required">Id is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label> Name</label>
+            <input type="text" formControlName="name" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Name is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Salary</label>
+            <input type="text" formControlName="sal" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.sal.errors }" />
+            <div *ngIf="submitted && f.sal.errors" class="invalid-feedback">
+                <div *ngIf="f.sal.errors.required">Division is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>City</label>
+            <input type="text" formControlName="city" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+            <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                <div *ngIf="f.city.errors.required">City is required.</div>
+            </div>
+        </div>
+        <div class="form-group" class="inpt">
+            <label>Phone Number</label>
+            <input type="text" max="10" formControlName="phone" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                <div *ngIf="f.phone.errors.required">Phone Number is required.</div>
+                <div *ngIf="f.phone.errors.pattern || f.phone.errors.minlength">
+                    Please enter a valid mobile number </div>
+            </div>
+        </div><br>
+        <div class="form-group">
+            <button class="btn btn-primary px-3" (click)="onSubmit()">Add</button>
+            <button (click)="reset()" class="btn btn-secondary ml-3 px-5">Reset</button>
+            <button (click)="update()" class="btn btn-success">Update</button>&nbsp;&nbsp;
+        </div>
+    </form>
+    <h3 class="border-bottom p-3">Employee Details</h3>
+    <div class="m-3">
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>City</th>
+                <th>Phone</th>
+                <th>Action</th>
+            </tr>
+            <ng-container *ngIf="!noDataFound">
+                <tr *ngFor='let data of fData; index as i' >
+                   <td (click)="ID(data.id)">{{data.id}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.sal}}</td>
+                    <td>{{data.city}}</td>
+                    <td>{{data.phone}}</td>
+                    <td>
+                        <button type="submit" (click)="edit(data,i)" class="btn btn-primary">Edit</button>&nbsp;&nbsp;
+                         <button (click)="deleteEmployeeData(data.id)" class="btn btn-danger">Delete</button>&nbsp;&nbsp;
+                         <button (click)="ID(data.id)" class="btn btn-success">View</button>&nbsp;&nbsp;
+                         
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+        <ng-container>
+            <p *ngIf="noDataFound" class="text-center">No Data Found</p>
+            <p *ngIf="fData?.length == null" class="text-center">No Data Found, Please add employee to see the records
+            </p>
+        </ng-container>
+    </div>
+</div>
+<!-- <div>
+    <pagination-controls (pageChange)="pageChange(currentPage = $event)" class="float-right"></pagination-controls>
+</div> -->
